@@ -1,0 +1,217 @@
+{
+  "openapi": "3.0.0",
+  "info":{
+    "title": "paracuando-API",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Francisco Ortiz",
+      "email": "pacoortiz16@hotmail.com",
+      "url": "https://remarkable-halva-ceb6d8.netlify.app/"
+    }
+  },
+  "servers": [
+    {
+        "url": "http://localhost:7000/api/v1",
+        "description": "Development server"
+    }
+  ],
+  "components": {
+    "schemas": {
+        "Login": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "example@mail.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "n7vf%$YRYGDRY"
+                }
+            }
+        },
+        "SignUp": {
+            "type": "object",
+            "properties": {
+                "first_name": {"$ref": "#/components/parameters/first_name"},
+                "last_name": {"$ref": "#/components/parameters/last_name"},
+                "password": {"$ref": "#/components/parameters/password"},
+                "email": {"$ref": "#/components/parameters/email"}
+            }
+        }
+    },
+    "parameters": {
+        "first_name": {
+            "name": "first name",
+            "in": "body",
+            "description": "User name",
+            "required": true,
+            "schema": {
+                "type": "string"
+            }
+        },
+        "last_name": {
+            "name": "last name",
+            "in": "body",
+            "description": "User last name",
+            "required": true,
+            "schema": {
+                "type": "string"
+            }
+        },
+        "password": {
+            "name": "password",
+            "in": "body",
+            "description": "password",
+            "required": true,
+            "schema": {
+                "type": "string"
+            }
+        },
+        "email": {
+            "name": "email",
+            "in": "body",
+            "description": "email address",
+            "required": true,
+            "schema": {
+                "type": "string"
+            }
+        },
+        "username": {
+            "name": "user name",
+            "in": "body",
+            "description": "Alias for the user",
+            "required": true,
+            "schema": {
+                "type": "string"
+            }
+        }
+    }
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "operationId": "login",
+        "summary": "Login with user credentials",
+        "tags": [ "Login" ],
+        "requestBody": {
+            "description": "### Parameters needed to login",
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/Login"
+                    }
+                }
+            }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successfully"
+          },
+          "400": {
+            "description": "Something went wrong while trying to login"
+          }
+        }
+      }
+    },
+    "/auth/sign-up": {
+      "post": {
+        "operationId": "sign-up",
+        "summary": "Starts session",
+        "tags": ["Login"],
+        "requestBody": {
+            "description": "### Parameters needed to sign-up",
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/SignUp"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Sign-up successfully"
+            },
+            "400": {
+                "description": "Something went wrong while trying to sign-up"
+            }
+        }
+      }
+    },
+    "/auth/forget-password": {
+        "post": {
+            "operationId": "Sends an email to recover your password",
+            "summary": "If you forget your password, you can change it following this route",
+            "tags": ["Login"],
+            "requestBody": {
+                "description": "### Parameters needed to send an email to recover your parsword",
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "An email will be send to you with instructions to change your password"
+                },
+                "400": {
+                    "description": "There was an error while trying to send email"
+                }
+            }
+        }
+    },
+    "/auth/change-password/{token}": {
+        "post": {
+            "operationId": "Changes password",
+            "summary": "Changes new password by old one",
+            "tags": ["Login"],
+            "parameters": [
+                {
+                    "name": "token",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "requestBody": {
+                "description": "### Parameters needed to change your password",
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Your password has changed successfully"
+                },
+                "401": {
+                    "description": "Unauthorized - Something went wrogn while trying to change your password"
+                }
+            }
+        }
+    }
+  }
+}

@@ -15,7 +15,7 @@ module.exports = {
         last_name: 'Ortiz',
         email: 'pacoortiz16@hotmail.com',
         username: 'pacoortiz16@hotmail.com',
-        password: hashPassword('Paco16/07/1994'),
+        password: hashPassword('paco123'),
         created_at: new Date(),
         updated_at: new Date(),
       },

@@ -6,6 +6,9 @@ require('dotenv').config()
 const routerModels = require('./routes/models.router')
 const routerErrorHandler = require('./routes/errorhandler.router')
 
+const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('./swagger.json')
+
 
 const app = express()
 const PORT = process.env.PORT || 8000
@@ -43,7 +46,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 /* 
-    Tell everyone the state of your api
+  Tell everyone the state of your api
 */
 app.get('/', ({ res }) => {
   return res.json({
@@ -51,6 +54,8 @@ app.get('/', ({ res }) => {
     maintenance: false,
   })
 })
+
+app.use('/api/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 /*
 Routes
