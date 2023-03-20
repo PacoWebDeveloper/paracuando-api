@@ -27,7 +27,17 @@ class ProfilesService {
     return profile
   }
 
+  async isAdminVerification(id) {
+    let profile = await models.Profiles.findOne({
+      where: {user_id: id}
+    })
 
+    if (!profile) throw new CustomError('Not found Profile', 404, 'Not Found')
+    
+    if (profile.role_id === 2)
+      return true
+    return false
+  }
 }
 
 module.exports = ProfilesService

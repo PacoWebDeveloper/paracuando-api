@@ -1,5 +1,3 @@
-// const passportJWT = require('../middlewares/auth.middleware')
-
 const JwtStrategy = require('passport-jwt').Strategy
 const { ExtractJwt } = require('passport-jwt')
 const passport = require('passport')
