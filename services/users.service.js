@@ -174,7 +174,49 @@ class UsersService {
       throw error
     }
   }
+  //Ajustar cuando Julio ya tenga el modelo creado
+  async getVotedPublications(id, limit, size) {
 
+    const queryOptions = {
+      limit,
+      size,
+      where: {
+        user_id: id
+      }
+    }
+
+    const publications = await models.users.findOne({
+      include: {
+        model: models.publications,
+        queryOptions
+      }
+    })
+
+    if (publications)
+      return publications
+    return null
+  }
+
+  async getPublicationsCreatedByUser(id, limit, size) {
+
+    const queryOptions = {
+      limit,
+      size,
+      where: {
+        user_id: id
+      }
+    }
+    const publications = await models.users.findOne({
+      include: {
+        model: models.publications,
+        queryOptions
+      }
+    })
+    
+    if (publications)
+      return publications
+    return null
+  }
 }
 
 module.exports = UsersService
