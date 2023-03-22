@@ -86,9 +86,37 @@ const editUserData = async (req, res, next) => {
   }
 }
 
+const getUsers = async (req, res, next) => {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  const tokenInfo = JSON.parse(atob((token).split('.')[1]))
+  const userId = tokenInfo.id
+
+  const users = {}
+
+  try {
+    if (await isAdmin(userId)) {
+      Object.assign(users, await userService.findAllUsers())
+      
+      res.status(200).json({
+        message: 'Users retreived successfully',
+        users
+      })
+    }  else {
+      res.status(400).json({
+        message: 'You cannot see users information'
+      })
+    }
+  } catch(error) {
+    next(error)
+  }
+
+}
+
 module.exports = {
   getUserById,
   findVotedPublications,
-  findPublicationsByUser
+  findPublicationsByUser,
+  getUsers
 }
 

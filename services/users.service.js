@@ -217,6 +217,14 @@ class UsersService {
       return publications
     return null
   }
+
+  async findAllUsers() {
+    const users = await models.Users.findAndCountAll()
+
+    if (users)
+      return users
+    return null
+  }
 }
 
 module.exports = UsersService
