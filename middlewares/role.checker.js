@@ -6,7 +6,7 @@ const profilesService = new ProfilesService()
 const isAdmin = async (id)  => {
   try {
 
-    let isSuperUser = await profilesService.isAdminVerification(id)
+    const isSuperUser = await profilesService.isAdminVerification(id)
     
     return isSuperUser
 
