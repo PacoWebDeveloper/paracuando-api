@@ -25,10 +25,42 @@ class UsersService {
       options.where.id = id
     }
 
-    const { name } = query
-    if (name) {
-      options.where.name = { [Op.iLike]: `%${name}%` }
+    const { first_name } = query
+    if (first_name) {
+      options.where.first_name = { [Op.iLike]: `%${first_name}%` }
     }
+
+    const { last_name } = query
+    if (last_name)
+      options.where.last_name = {[Op.iLike]: `%${last_name}%`}
+
+    const { email } = query
+    if (email)
+      options.where.email = {[Op.iLike]: `%${email}%`}
+
+    const { username } = query
+    if (username)
+      options.where.username = {[Op.iLike]: `%${username}%`}
+    
+    const { emial_verified } = query
+    if (emial_verified)
+      options.where.emial_verified = {[Op.iLike]: `%${emial_verified}%`}
+
+    const { country_id } = query
+    if (country_id)
+      options.where.country_id = {[Op.eq]: `%${country_id}%`}
+
+    const { code_phone } = query
+    if (code_phone)
+      options.where.code_phone = {[Op.iLike]: `%${code_phone}%`}
+
+    const { phone } = query
+    if (phone)
+      options.where.phone = {[Op.iLike]: `%${phone}%`}
+
+    const { created_at } = query
+    if (created_at)
+      options.where.created_at = {[Op.iLike]: `%${created_at}%`}
 
     //Necesario para el findAndCountAll de Sequelize
     options.distinct = true

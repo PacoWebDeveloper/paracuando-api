@@ -92,11 +92,17 @@ const getUsers = async (req, res, next) => {
   const authHeader = req.headers['authorization']
   const userId = getIdFromToken(authHeader)
 
+  const filters = req.query
+
   const users = {}
+  
 
   try {
     if (await isAdmin(userId)) {
-      Object.assign(users, await userService.findAllUsers())
+      if (!filters)
+        Object.assign(users, await userService.findAllUsers())
+      else 
+        Object.assign(users, await userService.findAndCount(filters))
       
       res.status(200).json({
         message: 'Users retreived successfully',
