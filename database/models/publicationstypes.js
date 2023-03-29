@@ -14,9 +14,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   PublicationsTypes.init({
-    id: DataTypes.SMALLINT,
-    name: DataTypes.STRING,
-    description: DataTypes.STRING
+    id: {
+      type: DataTypes.SMALLINT,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'PublicationsTypes',
