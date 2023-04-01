@@ -42,9 +42,11 @@ const getUserById = async (req, res, next) => {
 }
 
 const findVotedPublications = async (req, res) => {
-  const { id, limit, size } = req.params
+  const { id } = req.params
 
-  const publications = await userService.getVotedPublications(id)
+  const { limit, size } = req.query
+
+  const publications = await userService.getVotedPublications(id, limit, size)
 
   res.status(200).json({
     message: 'Publications retrieved successfully',

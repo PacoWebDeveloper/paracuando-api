@@ -63,7 +63,6 @@ class UsersService {
       options.where.created_at = {[Op.iLike]: `%${created_at}%`}
 
     //Necesario para el findAndCountAll de Sequelize
-    options.distinct = true
 
     const users = await models.Users.findAndCountAll(options)
     return users
